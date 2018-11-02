@@ -5,8 +5,10 @@ const logger = require('morgan')
 const bodyParser = require('body-parser')
 const session = require('express-session')
 const dotenv = require('dotenv').config()
-const indexRouter = require('./routes/index')
 const app = express()
+
+const indexRouter = require('./routes/index')
+const dashRouter = require('./routes/dashboard')
 
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'jade')
@@ -26,6 +28,7 @@ app.use(express.urlencoded({ extended: false }))
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/', indexRouter)
+app.use('/dashboard', dashRouter)
 
 app.use(function(req, res, next) {
   next(createError(404))

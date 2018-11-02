@@ -9,6 +9,9 @@ html
     block header
       div#header
         h1 Express Shop
-        a(href='/dashboard/') My Dashboard
+        a(href='/cart/') My Cart
         a(href='/myprofile/') My Profile
+        if nosearch
+        else
+          form#search-form(method="get" action='/search') #[input(type="search" placeholder="Search products" name="searchQ")] #[input(type="submit" name="Enter")]
     block main

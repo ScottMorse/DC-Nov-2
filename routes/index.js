@@ -1,8 +1,6 @@
 let express = require('express');
 let router = express.Router();
 let path = require("path")
-// let sql = require("../modules/sqlCom")
-let utils = require('../modules/utils')
 let db = require("../modules/pgutils")
 
 //change to having dashboard button instead of log/reg forms , no redirect
@@ -12,7 +10,7 @@ router.get('/', (req, res, next) => {
     res.redirect('/dashboard')
     return
   }
-  res.render('index')
+  res.render('index',{nosearch:true})
 })
 
 router.post('/register', (req,res,next) => {
@@ -44,7 +42,7 @@ router.post('/register', (req,res,next) => {
             .then(result =>{
               db.one('SELECT * FROM users WHERE username = ' + db.wrap(username) + ';')
                 .then(userrow => {
-                    db.insertNewData('userdata',['uid','username'],[userrow.id,db.wrap(username)])
+                    db.insertNewData('addresses',['uid'],[userrow.id])
                     const sess = req.session
                     sess.uid = userrow.id
                     sess.username = userrow.username

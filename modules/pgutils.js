@@ -19,7 +19,6 @@ function createTable(tbName, colDescArr){
     return db.any('CREATE TABLE ' + tbName + ' ( ' + colDescArr.join(', ') + ' ) ;')
 }
 
-//TODO USE SEPARATE USERDATA TABLE 
 function checkDefaultTables(){
     db.any('SELECT * FROM users;')
     .then(after => {
@@ -51,14 +50,14 @@ function checkDefaultTables(){
                 console.log('> PostgreSQL orders table okay.')
             })
             .catch(err =>
-                createTable('usernetworks', [
+                createTable('orders', [
                     'id SERIAL PRIMARY KEY',
                     'uid INTEGER REFERENCES users(id) NOT NULL',
                     'productids INTEGER[] DEFAULT \'{}\'',
                 ]).then(console.log('> PostgreSQL orders table created.')).catch(err => console.log(err)))
         db.oneOrNone('SELECT * FROM products LIMIT 1;')
             .then(after => {
-                console.log('> PostgreSQL notifications table okay.')
+                console.log('> PostgreSQL orders table okay.')
             })
             .catch(err =>
                 createTable('products', [
